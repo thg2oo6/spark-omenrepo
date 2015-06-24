@@ -31,10 +31,12 @@ trait VersionCheckTrait
     protected function buildLikeVersionQuery($versionQuery, $version)
     {
         if ($version['minor'] == "*")
-            return $versionQuery->where('version', 'like', $version['major'] . '.%');
+            return $versionQuery->where('version', 'like', $version['major'] . '.%')
+                                ->orderby('version', 'desc');
 
         if ($version['patch'] == "*")
-            return $versionQuery->where('version', 'like', $version['major'] . '.' . $version['minor'] . '.%');
+            return $versionQuery->where('version', 'like', $version['major'] . '.' . $version['minor'] . '.%')
+                                ->orderby('version', 'desc');
     }
 
 
@@ -56,6 +58,9 @@ trait VersionCheckTrait
                 $qVersion .= '.' . $version['minor'];
 
             $verQ = $verQ->where('version', $version['operator'], $qVersion . '.0');
+
+            if($version['operator'] == "<" || $version['operator'] == "<=")
+                $verQ = $verQ->orderby('version', 'desc');
         }
 
         if (!isset($version['like'])) {
@@ -64,6 +69,9 @@ trait VersionCheckTrait
             $qVersion .= '.' . $version['patch'];
 
             $verQ = $verQ->where('version', $version['operator'], $qVersion);
+
+            if($version['operator'] == "<" || $version['operator'] == "<=")
+                $verQ = $verQ->orderby('version', 'desc');
         }
 
         return $verQ;

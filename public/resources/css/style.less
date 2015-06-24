@@ -1,0 +1,126 @@
+/**
+ * Omen Repository | Spark
+ *
+ * Author: Valentin Duricu <valentin.duricu (at) gmail.com>
+ * Date: 23.06.2015
+ * URL: http://omen.cloud-studio.ro
+ * License: CC-BY-SA-4.0
+ */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300,600);
+
+/* Colors: */
+@white: #ffffff;
+@black: #282828;
+@yellow: #fed100;
+
+@highlight: #439c00;
+@highlightBorder: #317200;
+
+/* Main elements */
+html, body {
+    width: 100%;
+    height: 100%;
+    //    overflow: hidden;
+
+    font-weight: 300;
+    font-size: 12pt;
+}
+
+/* Helpers */
+.imageNoText(@cursor, @width, @image) {
+    color: transparent;
+    cursor: @cursor;
+    text-indent: -5000px;
+    display: block;
+
+    width: @width;
+    background: transparent url(@image) no-repeat center center;
+}
+
+.imageNoTextHeight(@height) {
+    height: @height;
+}
+
+.imageNoTextLineHeight(@height) {
+    line-height: @height;
+}
+
+.imageNoTextH(@cursor, @width, @height, @image) {
+    .imageNoText(@cursor, @width, @image);
+    .imageNoTextHeight(@height);
+}
+
+.imageNoTextLH(@cursor, @width, @height, @image) {
+    .imageNoText(@cursor, @width, @image);
+    .imageNoTextLineHeight(@height);
+}
+
+/* Header */
+.omen-headerContainer {
+    background: @highlight;
+    color: @white;
+    border-bottom: 1px solid @highlightBorder;
+
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
+
+    padding: 30px 0 40px 0;
+
+    .omen-topPart {
+        a {
+            color: @white;
+        }
+
+        .omen-logo {
+            .imageNoTextLH(default, 168px, 75px, '../images/omen.logo.png');
+        }
+
+        .omen-userProfile {
+            text-align: right;
+
+            ul {
+                float: right;
+                padding-top: 10px;
+                margin-right: 15px;
+                list-style: none;
+
+                li {
+                    .omen-mainlink {
+                        font-size: 17pt;
+                        color: @yellow;
+                    }
+                    .omen-sidelink{
+                        font-size: 11pt;
+                    }
+                }
+            }
+
+            .omen-userImage {
+                float: right;
+                img {
+                    width: 75px;
+                    border: 2px solid @highlightBorder;
+                    -webkit-border-radius: 50%;
+                    -moz-border-radius: 50%;
+                    border-radius: 50%;
+
+                    &.omen-noUserLogin {
+                        border: none;
+                    }
+                }
+                a {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    .omen-searchField {
+        margin-top: 40px;
+
+        input[placeholder] {
+            font-style: italic;
+            font-weight: 300;
+        }
+    }
+}

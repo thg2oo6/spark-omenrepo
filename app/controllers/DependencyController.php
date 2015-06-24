@@ -142,7 +142,7 @@ class DependencyController extends \BaseController
             $proname = $deps->project->name;
             if (!isset($dependencies[$proname])) {
                 $dependencies[$proname] = URL::to('/api/v1/dependency/download/' . $deps->filename);
-                $packs[$deps->filename] = ["package" => $proname, "version" => $version->version];
+                $packs[$deps->filename] = ["package" => $proname, "version" => $deps->version];
             }
 
             $this->recursiveDeps($dependencies, $packs, $deps);
