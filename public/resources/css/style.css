@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300,600);
 /**
  * Omen Repository | Spark
  *
@@ -6,7 +7,6 @@
  * URL: http://omen.cloud-studio.ro
  * License: CC-BY-SA-4.0
  */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300,600);
 /* Colors: */
 /* Main elements */
 html,
@@ -15,6 +15,23 @@ body {
   height: 100%;
   font-weight: 300;
   font-size: 12pt;
+}
+a,
+.btn-link {
+  color: #439c00;
+}
+.omen-button {
+  color: #ffffff;
+  background-color: #439c00;
+  border-color: #51bd00;
+}
+.omen-button:hover {
+  background-color: #317200;
+  border-color: #439c00;
+}
+.omen-elementHeader {
+  font-weight: bold;
+  font-size: 14pt;
 }
 /* Helpers */
 /* Header */
@@ -25,6 +42,7 @@ body {
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   padding: 30px 0 40px 0;
+  margin-bottom: 20px;
 }
 .omen-headerContainer .omen-topPart a {
   color: #ffffff;
@@ -53,13 +71,13 @@ body {
 }
 .omen-headerContainer .omen-topPart .omen-userProfile ul li .omen-sidelink {
   font-size: 11pt;
+  margin-left: 15px;
 }
 .omen-headerContainer .omen-topPart .omen-userProfile .omen-userImage {
   float: right;
 }
 .omen-headerContainer .omen-topPart .omen-userProfile .omen-userImage img {
   width: 75px;
-  border: 2px solid #317200;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -76,4 +94,163 @@ body {
 .omen-headerContainer .omen-searchField input[placeholder] {
   font-style: italic;
   font-weight: 300;
+}
+.omen-mainContent {
+  margin-bottom: 20px;
+}
+.omen-mainContent .omen-searchInfo {
+  text-align: center;
+}
+.omen-mainContent .omen-packages .omen-package .omen-title {
+  font-size: 24pt;
+  color: #439c00;
+}
+.omen-mainContent .omen-packages .omen-package .omen-title a {
+  color: #439c00;
+}
+.omen-mainContent .omen-packages .omen-package .omen-version {
+  font-size: 12pt;
+  font-weight: 300;
+  color: #ababab;
+}
+.omen-mainContent .omen-packages .omen-package .omen-provider {
+  color: #ababab;
+}
+.omen-mainContent .omen-packages .omen-package .omen-provider a {
+  color: #ababab;
+}
+.omen-mainContent .omen-packages .omen-package .omen-provider a:hover {
+  text-decoration: none;
+  color: #317200;
+}
+.omen-mainContent .omen-packages .omen-package .omen-description {
+  text-align: justify;
+}
+.omen-mainContent .omen-packages .omen-package .omen-tags {
+  color: #ababab;
+}
+.omen-mainContent .omen-packages .omen-package .omen-tags a {
+  color: #ababab;
+}
+.omen-mainContent .omen-packages .omen-package .omen-tags a:hover {
+  text-decoration: none;
+  color: #317200;
+}
+.omen-mainContent .omen-packages .omen-package .omen-tags a:after {
+  content: ",";
+  color: #ababab;
+}
+.omen-mainContent .omen-packages .omen-package .omen-tags a:last-child:after {
+  content: "";
+}
+.omen-loginContainer {
+  padding-top: 50px;
+  padding-bottom: 30px;
+}
+.omen-loginContainer .omen-loginBox {
+  padding-bottom: 15px;
+}
+.omen-loginContainer .omen-loginBox h1 {
+  text-align: center;
+  font-weight: 300;
+  padding-bottom: 10px;
+}
+.omen-loginContainer .omen-loginBox .omen-inputBox {
+  margin-bottom: 10px;
+}
+.omen-loginContainer .omen-loginBox .omen-linkBox {
+  text-align: center;
+}
+.omen-footerContainer {
+  padding: 30px 0;
+  color: #656565;
+  font-size: 10pt;
+}
+.omen-footerContainer a {
+  color: #ababab;
+}
+.omen-footerContainer .omen-poweredBy {
+  text-align: center;
+}
+.omen-profile .omen-projects .omen-projectsCount {
+  margin: 10px 0;
+  display: block;
+}
+.omen-profile .omen-projects .omen-projectsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.omen-profile .omen-projects .omen-projectsList li {
+  margin-bottom: 10px;
+}
+.omen-profile .omen-userProfile .omen-userImage {
+  display: block;
+  margin: auto;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 3px 15px 2px rgba(60, 60, 60, 0.5);
+  box-shadow: 0 3px 15px 2px rgba(60, 60, 60, 0.5);
+}
+.omen-profile .omen-userProfile .omen-userInformation {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+  text-align: center;
+}
+.omen-profile .omen-userProfile .omen-userInformation li {
+  margin-bottom: 2px;
+}
+.omen-projectDetails h3 {
+  font-weight: 300;
+}
+.omen-projectDetails .omen-projectLinks {
+  list-style: none;
+  margin: 30px 0 0 0;
+  padding: 0;
+}
+.omen-projectDetails .omen-projectLinks li {
+  margin-bottom: 10px;
+  font-size: 11pt;
+  border-bottom: 1px dotted #ababab;
+}
+.omen-projectDetails .omen-projectLinks li.omen-elementHeader {
+  margin-top: 15px;
+  margin-bottom: 3px;
+  border-bottom: none;
+}
+.omen-projectDetails .omen-projectLinks li.omen-downloadElement {
+  font-size: 15pt;
+  color: #656565;
+  vertical-align: middle;
+  margin-bottom: 15px;
+  border-bottom: none;
+}
+.omen-projectDetails .omen-projectLinks li.omen-tags {
+  color: #ababab;
+}
+.omen-projectDetails .omen-projectLinks li.omen-tags a {
+  color: #ababab;
+}
+.omen-projectDetails .omen-projectLinks li.omen-tags a:hover {
+  text-decoration: none;
+  color: #317200;
+}
+.omen-projectDetails .omen-projectLinks li.omen-tags a:after {
+  content: ",";
+  color: #ababab;
+}
+.omen-projectDetails .omen-projectLinks li.omen-tags a:last-child:after {
+  content: "";
+}
+.omen-projectDetails .omen-projectLinks li.omen-versions {
+  color: #656565;
+}
+.omen-projectDetails .omen-projectLinks li.omen-versions span:after {
+  content: ",";
+  color: #ababab;
+}
+.omen-projectDetails .omen-projectLinks li.omen-versions span:last-child:after {
+  content: "";
 }

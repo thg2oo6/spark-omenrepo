@@ -46,6 +46,10 @@ Route::filter('auth.basic', function () {
     if (Auth::guest())
         return Auth::basic();
 });
+
+/**
+ * Filter used for the authentication through the API for the CLI tool.
+ */
 Route::filter('auth.once', function () {
     if (!Auth::guest())
         return false;
@@ -59,6 +63,23 @@ Route::filter('auth.once', function () {
         return Response::json(["status" => "error", "message" => "Invalid user or password"], 500);
     }
 
+});
+
+/**
+ * Filters to check if the application has been set as a private
+ * one or not. Disables the registration feature if the repository
+ * is a private one.
+ */
+Route::filter('omen.privateRepo', function () {
+    if (Auth::guest() && \Config::get('omen.private'))
+        return Redirect::to('login')->with('omen_notice', 'This repository is a private one!');
+
+});
+Route::filter('omen.csrf', function ($route, $request) {
+    if (Auth::guest() && \Config::get('omen.private'))
+        return Redirect::to('login')->with('omen_notice', 'User registration has been disabled!');
+
+    Route::callRouteFilter('csrf', [], $route, $request);
 });
 
 /*

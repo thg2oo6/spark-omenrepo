@@ -11,87 +11,32 @@
 /**
  * The keyword manipulation controller.
  */
-class KeywordController extends \BaseController {
+class KeywordController extends \BaseController
+{
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
+    /**
+     * Searches for the given keyword.
+     *
+     * @param string $keyword The keyword to search after.
+     *
+     * @return \Illuminate\Http\RedirectResponse|\View
+     */
+    public function getKeywordSearch($keyword)
+    {
+        $keyword = filter_var($keyword, FILTER_SANITIZE_STRING);
+        if (empty($keyword))
+            return Redirect::to('/');
 
+        $projects = Project::whereHas('keywords', function ($q) use ($keyword) {
+            $q->where('name', $keyword);
+        })->get();
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+        $projects->load('keywords', 'user');
 
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
+        return View::make('search', [
+            "searchString" => $keyword,
+            "projects"     => $projects
+        ]);
+    }
 
 }

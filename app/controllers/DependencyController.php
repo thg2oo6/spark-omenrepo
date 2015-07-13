@@ -132,6 +132,14 @@ class DependencyController extends \BaseController
         return Response::json(["status" => $status, "dependencies" => $dependencies, "packages" => $packs, "errors" => $errors]);
     }
 
+
+    /**
+     * Builds the recursive dependencies for the given version.
+     *
+     * @param array   $dependencies The list of dependencies.
+     * @param array   $packs        The list with packages loaded.
+     * @param Version $version      The version for which the dependencies are being created.
+     */
     private function recursiveDeps(&$dependencies, &$packs, $version)
     {
         if (is_null($version))

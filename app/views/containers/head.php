@@ -4,7 +4,7 @@
     <title>omen :: by Spark</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/bootstrap.css">
     <link rel="stylesheet" href="/resources/css/style.css">
 
     <!-- Latest compiled and minified JavaScript -->
@@ -30,39 +30,3 @@
     <meta name="theme-color" content="#439c00">
 </head>
 <body>
-
-<header class="omen-headerContainer">
-    <section class="container">
-        <section class="row omen-topPart">
-            <section class="col-lg-2">
-                <a href="/" title="Omen | Spark" class="omen-logo">Omen</a>
-            </section>
-            <section class="col-lg-4 col-lg-offset-6 omen-userProfile">
-                <a href="/login" class="omen-userImage"><img src="/resources/images/omen.smiley.png" alt="profileImg"
-                                                             class="omen-noUserLogin"/></a>
-                <ul>
-                    <li><a href="/signup" class="omen-mainlink">sign up</a></li>
-                    <li><a href="/login" class="omen-sidelink">login</a></li>
-                </ul>
-            </section>
-        </section>
-        <section class="row omen-searchField">
-            <section class="col-lg-12">
-                <section class="input-group input-group-lg">
-                    <input type="text" class="form-control" placeholder="The package you are searching for ..."/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </span>
-                </section>
-                <!-- /input-group -->
-            </section>
-        </section>
-    </section>
-</header>
-<section class="container">
-    a
-</section>
-</body>
-</html>

@@ -16,6 +16,12 @@ class PublishController extends \BaseController
 
     use VersionCheckTrait;
 
+    /**
+     * Creates an application version into the repository.
+     *
+     * @throws Exception
+     * @return \Illuminate\Http\Response
+     */
     public function createApplication()
     {
         try {
@@ -49,6 +55,15 @@ class PublishController extends \BaseController
         }
     }
 
+    /**
+     * Checks the existence of a project for the given author.
+     *
+     * @param string $name   The name of the project.
+     * @param User   $author The autor of the project.
+     *
+     * @return \Project|null|static
+     * @throws Exception
+     */
     private function checkProjectExistence($name, $author)
     {
         $project = Project::where('name', $name)->first();
@@ -64,6 +79,13 @@ class PublishController extends \BaseController
         return $project;
     }
 
+    /**
+     * Creates a project into the system.
+     *
+     * @param stdObject $projectFile The project description file.
+     *
+     * @return Project
+     */
     private function createProject($projectFile)
     {
         $project = new Project();
@@ -84,6 +106,13 @@ class PublishController extends \BaseController
         return $project;
     }
 
+    /**
+     * Checks and creates new keywords into the repository. Attaches
+     * the keywords to the project.
+     *
+     * @param Project $project  The project for which the keywords are attached.
+     * @param array   $keywords A list with keywords.
+     */
     private function checkKeywords($project, $keywords)
     {
         $proKeywords = $project->keywords();
@@ -106,6 +135,12 @@ class PublishController extends \BaseController
         $project->save();
     }
 
+    /**
+     * Checks the dependencies of the given version and attaches them to the version.
+     *
+     * @param Version $version The version of the project to be checked.
+     * @param array   $deps    The dependency versions.
+     */
     private function checkDependencies($version, $deps)
     {
         $proDeps = $version->dependsOn();
@@ -126,6 +161,14 @@ class PublishController extends \BaseController
         $version->save();
     }
 
+    /**
+     * Validates the current version for the given project.
+     *
+     * @param Project $project The project for which we update the version.
+     * @param string  $version The version to update.
+     *
+     * @return null|Version
+     */
     private function checkVersion($project, $version)
     {
         $versions = $project->versions;
@@ -141,6 +184,14 @@ class PublishController extends \BaseController
         return null;
     }
 
+    /**
+     * Creates a new version of the project and stores it in the db.
+     *
+     * @param Project   $project The project for which the version is being stored.
+     * @param stdObject $file    The file containing project and version information.
+     *
+     * @return Version
+     */
     private function createVersion($project, $file)
     {
         $version = new Version();
@@ -155,6 +206,13 @@ class PublishController extends \BaseController
         return $version;
     }
 
+    /**
+     * Stores the input file with the given hash. Returns the sha1 checksum of the file.
+     *
+     * @param string $hash The hash for the file to be stored.
+     *
+     * @return string
+     */
     private function storeFile($hash)
     {
         $file = Input::file('file');
@@ -165,6 +223,13 @@ class PublishController extends \BaseController
         return sha1_file(dirname(__DIR__) . "/../packages/{$hash}");
     }
 
+    /**
+     * Extracts the version from a version string.
+     *
+     * @param string $version The version string.
+     *
+     * @return array
+     */
     private function extractVersion($version)
     {
         preg_match("/^(<|>|<=|>=)?([0-9]+).((\\*|[0-9]+)(\.([0-9]+|\\*))?)$/", $version, $ver);
