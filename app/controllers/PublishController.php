@@ -34,15 +34,15 @@ class PublishController extends \BaseController
             if (is_null($project))
                 $project = $this->createProject($file);
 
-            if (isset($file->keywords))
-                $this->checkKeywords($project, $file->keywords);
-
             $version = $this->checkVersion($project, $file->version);
             $status = "ok";
             if ($version != null)
-                $status = "update";
+                throw new ExistingVersionException($version);// $status = "update";
             else
                 $version = $this->createVersion($project, $file);
+
+            if (isset($file->keywords))
+                $this->checkKeywords($project, $file->keywords);
 
             if (isset($file->dependencies))
                 $this->checkDependencies($version, $file->dependencies);
@@ -174,8 +174,9 @@ class PublishController extends \BaseController
         $versions = $project->versions;
         foreach ($versions as $ver) {
             if ($ver->version == $version) {
-                $ver->checksum = $this->storeFile($ver->filename);
-                $ver->save();
+                /* Disable the update functionality */
+                // $ver->checksum = $this->storeFile($ver->filename);
+                // $ver->save();
 
                 return $ver;
             }

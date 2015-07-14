@@ -17,6 +17,7 @@
             "app/modules",
 			"app/database/migrations",
 			"app/database/seeds",
+            "app/omen/Exceptions",
 			"app/tests/TestCase.php"
 		]
 	},
