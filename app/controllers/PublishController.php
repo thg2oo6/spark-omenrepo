@@ -46,6 +46,8 @@ class PublishController extends \BaseController
 
             if (isset($file->dependencies))
                 $this->checkDependencies($version, $file->dependencies);
+
+            $project->save();
             DB::commit();
 
             return Response::json(["status" => $status]);

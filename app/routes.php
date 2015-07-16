@@ -73,4 +73,8 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::group(['prefix' => 'publish', 'before' => 'auth.once'], function () {
         Route::post('project', 'PublishController@createApplication');
     });
+    Route::group(['prefix' => 'unpublish', 'before' => 'auth.once'], function () {
+        Route::delete('project', 'UnpublishController@deleteApplication');
+        Route::delete('version', 'UnpublishController@deleteVersion');
+    });
 });
