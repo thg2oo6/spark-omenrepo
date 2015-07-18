@@ -62,6 +62,30 @@ class UserController extends \BaseController
      */
     public function postCreateNewAccount()
     {
+        $user = [];
+        try {
+            $response = $this->createUserAccount($user);
+
+            return Redirect::to('login')
+                ->with('omen_notice', $response);
+
+        } catch (\Exception $ex) {
+            return Redirect::to('signup')
+                ->with('omen_error', $ex->getMessage())
+                ->withInput($user);
+        }
+    }
+
+    /**
+     * Creates a new user account.
+     *
+     * @param array $user Output array for error handling purpose.
+     *
+     * @return string
+     * @throws Exception
+     */
+    private function createUserAccount(&$user)
+    {
         $user = [
             'username'  => Input::get('username'),
             'password'  => Input::get('password'),
@@ -79,14 +103,8 @@ class UserController extends \BaseController
 
         $user['email'] = filter_var($user['email'], FILTER_SANITIZE_EMAIL);
 
-        try {
-            $this->passwordCheck($user);
-            $this->userCheck($user);
-        } catch (\Exception $ex) {
-            return Redirect::to('signup')
-                ->with('omen_error', $ex->getMessage())
-                ->withInput($user);
-        }
+        $this->passwordCheck($user);
+        $this->userCheck($user);
 
         if (\Config::get('omen.activation')) {
             $user['activationCode'] = md5($user['username'] . '|' . $user['firstname'] . $user['lastname'] . '|' . mt_rand());
@@ -109,12 +127,10 @@ class UserController extends \BaseController
                 $message->to($userDb->email, $userDb->firstname . ' ' . $userDb->lastname)->subject('Omen repository account activation');
             });
 
-            return Redirect::to('login')
-                ->with('omen_notice', 'Please activate your account, then login into it!');
+            return 'Please activate your account, then login into it!';
         }
 
-        return Redirect::to('login')
-            ->with('omen_notice', 'You can now login into your account!');
+        return 'You can now login into your account!';
     }
 
     /**

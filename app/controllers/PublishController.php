@@ -19,6 +19,7 @@ class PublishController extends \BaseController
     /**
      * Creates an application version into the repository.
      *
+     * @api
      * @throws Exception
      * @return \Illuminate\Http\Response
      */

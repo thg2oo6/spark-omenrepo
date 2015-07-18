@@ -23,6 +23,7 @@ class DependencyController extends \BaseController
      *
      * @param string $filehash The hash of the file to be downloaded.
      *
+     * @api
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function getDownloadPack($filehash)
@@ -37,6 +38,7 @@ class DependencyController extends \BaseController
     /**
      * Checks the dependencies list sent from the Omen tool.
      *
+     * @api
      * @return \Illuminate\Http\JsonResponse
      */
     public function postCheckAndBuild()
@@ -84,6 +86,7 @@ class DependencyController extends \BaseController
     /**
      * Checks the updated dependencies list sent from the Omen tool.
      *
+     * @api
      * @return \Illuminate\Http\JsonResponse
      */
     public function postCheckUpdateAndBuild()

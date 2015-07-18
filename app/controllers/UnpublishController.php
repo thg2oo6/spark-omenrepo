@@ -17,6 +17,7 @@ class UnpublishController extends \BaseController
     /**
      * Deletes an application from the repository.
      *
+     * @api
      * @throws Exception
      * @return \Illuminate\Http\Response
      */
@@ -59,6 +60,7 @@ class UnpublishController extends \BaseController
     /**
      * Deletes a version of an application from the repository.
      *
+     * @api
      * @throws Exception
      * @return \Illuminate\Http\Response
      */
