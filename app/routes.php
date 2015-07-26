@@ -70,11 +70,13 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::get('download/{hash}', 'DependencyController@getDownloadPack');
     });
 
-    Route::group(['prefix' => 'publish', 'before' => 'auth.once'], function () {
+    Route::post('login', 'UserController@apiLogin');
+
+    Route::group(['prefix' => 'publish', 'before' => 'auth.token'], function () {
         Route::post('project', 'PublishController@createApplication');
     });
 
-    Route::group(['prefix' => 'unpublish', 'before' => 'auth.once'], function () {
+    Route::group(['prefix' => 'unpublish', 'before' => 'auth.token'], function () {
         Route::delete('project', 'UnpublishController@deleteApplication');
         Route::delete('version', 'UnpublishController@deleteVersion');
     });

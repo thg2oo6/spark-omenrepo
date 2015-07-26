@@ -37,6 +37,36 @@ class UserController extends \BaseController
     }
 
     /**
+     * Does the user login (API).
+     *
+     * @api
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function apiLogin()
+    {
+        $user = [
+            'username' => Input::get('username'),
+            'email'    => Input::get('email'),
+            'password' => Input::get('password'),
+            'isActive' => 1
+        ];
+
+        if (Auth::attempt($user)) {
+            $token = new Token();
+            $token->user_id = Auth::user()->id;
+            $token->save();
+
+            $name = Auth::user()->firstname . ' ' . Auth::user()->lastname;
+
+            return Response::json(["status" => "ok", "token" => $token->uuid, "name" => $name]);
+        }
+
+        /* TODO: create user if not found. */
+
+        return Response::json(["status" => "error", "Invalid user, email or password"]);
+    }
+
+    /**
      * Returns the profile page for a given user.
      *
      * @param string $username The name of the user

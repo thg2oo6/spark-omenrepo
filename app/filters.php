@@ -66,6 +66,26 @@ Route::filter('auth.once', function () {
 });
 
 /**
+ * Filter used for the authentication through the API for the CLI tool.
+ */
+Route::filter('auth.token', function () {
+    if (!Auth::guest())
+        return false;
+
+    $token = Token::where('uuid', Input::get('token'))->first();
+    if (is_null($token)) {
+        return Response::json(["status" => "error", "message" => "Invalid token, please relogin"], 500);
+    }
+
+    if (!Auth::once($token->user)) {
+        return Response::json(["status" => "error", "message" => "Invalid user or password"], 500);
+    }
+
+    $token->save();
+
+});
+
+/**
  * Filters to check if the application has been set as a private
  * one or not. Disables the registration feature if the repository
  * is a private one.
