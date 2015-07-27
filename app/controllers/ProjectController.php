@@ -35,4 +35,31 @@ class ProjectController extends \BaseController
         ]);
     }
 
+    /**
+     * Downloads the archive for a given project
+     *
+     * @api
+     *
+     * @param string $name The name of the project.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function getDownload($name)
+    {
+        $project = Project::where('name', $name)->firstOrFail();
+
+        $versions = $project->versions->sortByDesc(function ($e) {
+            return $e->version;
+        });
+
+        foreach ($versions as $version) {
+            $file = dirname(__DIR__) . "/../packages/{$version->filename}";
+            if (file_exists($file))
+                return Response::download($file);
+        }
+
+        return Response::json(["message" => "Unable to find the package"], 500);
+
+    }
+
 }

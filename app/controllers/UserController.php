@@ -63,7 +63,7 @@ class UserController extends \BaseController
 
         /* TODO: create user if not found. */
 
-        return Response::json(["status" => "error", "Invalid user, email or password"], 403);
+        return Response::json(["status" => "error", "message" => "Invalid user, email or password"], 403);
     }
 
     /**

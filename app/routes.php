@@ -68,6 +68,7 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::post('check', 'DependencyController@postCheckAndBuild');
         Route::post('update', 'DependencyController@postCheckUpdateAndBuild');
         Route::get('download/{hash}', 'DependencyController@getDownloadPack');
+        Route::get('extend/{hash}', 'ProjectController@getDownload');
     });
 
     Route::post('login', 'UserController@apiLogin');
