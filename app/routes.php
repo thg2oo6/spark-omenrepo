@@ -59,6 +59,7 @@ Route::post('forgot_password', 'UserController@postForgotPassword')->before('csr
  */
 Route::get('account', 'UserController@getAccount')->before('auth');
 Route::post('account', 'UserController@postAccount')->before('auth');
+Route::get('account/delete_token/{token}', 'UserController@deleteToken')->before('auth');
 
 /**
  * Omen API routes.

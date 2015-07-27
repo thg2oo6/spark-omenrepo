@@ -41,6 +41,23 @@ Route::filter('auth', function () {
     }
 });
 
+Route::filter('auth.admin', function () {
+    if (Auth::guest()) {
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::guest('login');
+        }
+    }
+
+    if (!Auth::user()->isAdmin)
+        if (Request::ajax()) {
+            return Response::make('Unauthorized', 401);
+        } else {
+            return Redirect::to('/');
+        }
+});
+
 
 Route::filter('auth.basic', function () {
     if (Auth::guest())
@@ -77,8 +94,8 @@ Route::filter('auth.token', function () {
         return Response::json(["status" => "error", "message" => "Invalid token, please relogin"], 500);
     }
 
-    if (!Auth::once($token->user)) {
-        return Response::json(["status" => "error", "message" => "Invalid user or password"], 500);
+    if (!Auth::onceUsingId($token->user_id)) {
+        return Response::json(["status" => "error", "message" => "Invalid user or password"], 403);
     }
 
     $token->save();

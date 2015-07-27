@@ -13,7 +13,8 @@
     "barryvdh/laravel-ide-helper": "1.*",
     "barryvdh/laravel-debugbar": "1.8.*",
     "creolab/laravel-modules": "dev-master",
-    "webpatser/laravel-uuid": "2.*"
+    "webpatser/laravel-uuid": "2.*",
+    "maxhoffmann/parsedown-laravel": "dev-master"
   },
   "autoload": {
     "classmap": [

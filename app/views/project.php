@@ -1,4 +1,9 @@
 <?= View::make('containers.header')->render(); ?>
+<?php
+$versions = $project->versions->sortByDesc('updated_at');
+$latestVersion = $versions->first();
+$jsonVersion = json_decode($latestVersion->omenFile);
+?>
     <section class="container omen-maxContainer omen-mainContent">
         <section class="row omen-projectDetails">
             <section class="col-lg-8">
@@ -7,7 +12,7 @@
                 <h3><?= $project->description; ?></h3>
 
                 <section class="omen-readme">
-                    <!-- Later read the readme and import it here. -->
+                    <?= Markdown::parse($latestVersion->readme); ?>
                 </section>
             </section>
             <section class="col-lg-4">
@@ -22,7 +27,7 @@
                         updated it <?= $project->updated_at->diffForHumans(); ?>
                     </li>
                     <li>
-                        latest version published: <strong>v<?= $project->versions->max('version'); ?></strong>
+                        latest version published: <strong>v<?= $latestVersion->version ?></strong>
                     </li>
                     <?php if (!empty($project->license)): ?>
                         <li>
@@ -48,11 +53,42 @@
                         <span class="glyphicon glyphicon-tags">&nbsp;</span> Versions:
                     </li>
                     <li class="omen-versions">
-                        <?php $versions = $project->versions->sortByDesc('updated_at');
-                        foreach ($versions as $version): ?>
+                        <?php foreach ($versions as $version): ?>
                             <span class="omen-version"><?= $version->version; ?></span>
                         <?php endforeach; ?>
                     </li>
+                    <?php if (isset($jsonVersion->repository)): ?>
+                        <li class="omen-elementHeader">
+                            <span class="glyphicon glyphicon-file">&nbsp;</span> Repository:
+                        </li>
+                        <li class="omen-repository">
+                            <a href="<?= $jsonVersion->repository->url; ?>" target="_blank">
+                                <?= $jsonVersion->repository->url; ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if (isset($jsonVersion->contributors) && count($jsonVersion->contributors) != 0): ?>
+                        <li class="omen-elementHeader">
+                            <span class="glyphicon glyphicon-user">&nbsp;</span> Contributors:
+                        </li>
+                        <li class="omen-contributors">
+                            <ul>
+                                <?php foreach ($jsonVersion->contributors as $contributor):
+                                    $user = User::where('email', $contributor->email)->first();
+                                    ?>
+                                    <li>
+                                        <?php if (!is_null($user)): ?>
+                                            <a href="<?= URL::to('/profile/' . $user->username); ?>" target="_blank">
+                                                <?= $contributor->name; ?>
+                                            </a>
+                                        <?php else: ?>
+                                            <?= $contributor->name; ?>
+                                        <?php endif; ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </section>
         </section>

@@ -28,6 +28,8 @@ class PublishController extends \BaseController
         try {
             DB::beginTransaction();
             $file = json_decode(Input::get('omenFile'));
+            $readme = Input::get('readme');
+
             if (!Input::hasFile('file'))
                 throw new \Exception("You must upload a file!");
 
@@ -40,7 +42,7 @@ class PublishController extends \BaseController
             if ($version != null)
                 throw new ExistingVersionException($version);// $status = "update";
             else
-                $version = $this->createVersion($project, $file);
+                $version = $this->createVersion($project, $file, $readme);
 
             if (isset($file->keywords))
                 $this->checkKeywords($project, $file->keywords);
@@ -193,10 +195,11 @@ class PublishController extends \BaseController
      *
      * @param Project   $project The project for which the version is being stored.
      * @param stdObject $file    The file containing project and version information.
+     * @param string    $readme  The readme file.
      *
      * @return Version
      */
-    private function createVersion($project, $file)
+    private function createVersion($project, $file, $readme)
     {
         $version = new Version();
         $version->project_id = $project->id;
@@ -204,6 +207,7 @@ class PublishController extends \BaseController
         $version->omenFile = json_encode($file);
         $version->filename = sha1($project->id . '|' . $project->name . '|' . $version->version . '|' . mt_rand(1, 10000));
         $version->checksum = $this->storeFile($version->filename);
+        $version->readme = $readme;
 
         $version->save();
 

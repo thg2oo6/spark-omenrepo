@@ -62,11 +62,18 @@
                     </button>
                 </form>
             </section>
-            <section class="col-lg-4 col-lg-offset-4 omen-loginBox">
+            <section class="col-lg-4 omen-loginBox">
                 <h1>password</h1>
 
                 <form action="" method="POST">
                     <input type="hidden" name="section" value="password"/>
+                    <section class="omen-inputBox input-group input-group-lg">
+                        <span class="input-group-addon" id="password-label">
+                            <span class="glyphicon glyphicon-lock"></span>
+                        </span>
+                        <input type="password" name="oldpassword" placeholder="old password" class="form-control"
+                               aria-describedby="password-label"/>
+                    </section>
                     <section class="omen-inputBox input-group input-group-lg">
                         <span class="input-group-addon" id="password-label">
                             <span class="glyphicon glyphicon-lock"></span>
@@ -86,6 +93,17 @@
                         <span class="glyphicon glyphicon-save"></span> save
                     </button>
                 </form>
+            </section>
+            <section class="col-lg-4 omen-loginBox">
+                <h1>tokens</h1>
+                <ul class="omen-tokens">
+                    <?php foreach ($user->tokens as $token): ?>
+                        <li>
+                            <?= $token->uuid; ?>
+                            <a href="<?= URL::to('/account/delete_token/' . $token->uuid) ?>">delete token</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </section>
         </section>
     </section>

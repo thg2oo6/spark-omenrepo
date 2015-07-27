@@ -124,6 +124,7 @@ return array(
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
         'Creolab\LaravelModules\ServiceProvider',
+        'MaxHoffmann\Parsedown\ParsedownServiceProvider'
 
     ),
 
@@ -193,6 +194,7 @@ return array(
         'View'              => 'Illuminate\Support\Facades\View',
         'Debugbar'          => 'Barryvdh\Debugbar\Facade',
         'Uuid'              => 'Webpatser\Uuid\Uuid',
+        'Markdown'          => 'MaxHoffmann\Parsedown\ParsedownFacade',
 
     ),
 

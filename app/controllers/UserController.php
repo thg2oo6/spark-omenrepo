@@ -227,12 +227,13 @@ class UserController extends \BaseController
     public function postAccount()
     {
         $user = [
-            'username'  => Auth::user()->username,
-            'password'  => Input::get('password'),
-            'cpassword' => Input::get('cpassword'),
-            'email'     => Input::get('email'),
-            'firstname' => Input::get('firstname'),
-            'lastname'  => Input::get('lastname'),
+            'username'    => Auth::user()->username,
+            'password'    => Input::get('password'),
+            'cpassword'   => Input::get('cpassword'),
+            'email'       => Input::get('email'),
+            'firstname'   => Input::get('firstname'),
+            'lastname'    => Input::get('lastname'),
+            'oldpassword' => Input::get('oldpassword')
         ];
 
         $section = filter_var(Input::get('section'), FILTER_SANITIZE_STRING);
@@ -257,9 +258,9 @@ class UserController extends \BaseController
         }
 
         $userDb = Auth::user();
-        if ($section == 'password')
+        if ($section == 'password') {
             $userDb->password = $user['password'];
-        else {
+        } else {
             $userDb->firstname = $user['firstname'];
             $userDb->lastname = $user['lastname'];
             $userDb->email = $user['email'];
@@ -285,6 +286,14 @@ class UserController extends \BaseController
             throw new \Exception('The two passwords must be identical!');
         if (strlen($user['password']) < 6)
             throw new \Exception('The passwords must be at least 6 characters long!');
+
+        if (isset($user['oldpassword'])) {
+            if ($user['password'] == $user['oldpassword'])
+                throw new \Exception('The passwords are the same! (Old and new one)');
+
+            if (!Hash::check($user['oldpassword'], Auth::user()->password))
+                throw new \Exception('The password you entered is not valid!');
+        }
     }
 
     /**
@@ -310,6 +319,15 @@ class UserController extends \BaseController
             throw new \Exception('Last name cannot be empty!');
         if (strlen($user['firstname']) < 2 || strlen($user['lastname']) < 2)
             throw new \Exception('The first and last name should be at least 2 characters long!');
+    }
+
+    public function deleteToken($token)
+    {
+        $token = Token::where('uuid', $token)->where('user_id', Auth::user()->id)->firstOrFail();
+
+        $token->delete();
+
+        return Redirect::to('account');
     }
 
 }

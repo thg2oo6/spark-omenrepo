@@ -45,6 +45,16 @@ class User extends OmenModel implements UserInterface, RemindableInterface
     }
 
     /**
+     * Returns the tokens attached to the current user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tokens()
+    {
+        return $this->hasMany('Token');
+    }
+
+    /**
      * When the password is updated, we need to hash it before storing.
      *
      * @param string $pass The password to be hashed.
