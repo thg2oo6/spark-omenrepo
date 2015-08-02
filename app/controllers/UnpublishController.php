@@ -116,4 +116,27 @@ class UnpublishController extends \BaseController
         $version->delete();
     }
 
+    public function deleteProject($project_id)
+    {
+        try {
+            DB::beginTransaction();
+            $project = Project::where('id', $project_id)->firstOrFail();
+            $project->load('versions', 'keywords');
+
+            foreach ($project->versions() as $version) {
+                $this->removeVersion($version);
+            }
+
+            $project->keywords()->detach();
+
+            $project->delete();
+            DB::commit();
+
+            return Redirect::to('admin/projects');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
 } 

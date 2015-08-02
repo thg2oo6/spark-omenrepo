@@ -184,14 +184,18 @@ class UserController extends \BaseController
     /**
      * Resets the password for the given user.
      *
+     * @param User $user The user for which the password is being reset.
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postForgotPassword()
+    public function postForgotPassword($user = null)
     {
-        $username = filter_var(Input::get('username'), FILTER_SANITIZE_STRING);
         $passwd = Str::random(8);
+        if (!isset($user) || is_null($user)) {
+            $username = filter_var(Input::get('username'), FILTER_SANITIZE_STRING);
+            $user = User::where('username', $username)->firstOrFail();
+        }
 
-        $user = User::where('username', $username)->firstOrFail();
         $user->password = $passwd;
         $user->save();
 
@@ -328,6 +332,51 @@ class UserController extends \BaseController
         $token->delete();
 
         return Redirect::to('account');
+    }
+
+    public function deleteUser($userId)
+    {
+        $user = User::where('id', $userId)->firstOrFail();
+        $user->load('tokens', 'projects');
+
+        foreach ($user->tokens as $token) {
+            $token->delete();
+        }
+
+        foreach ($user->projects as $project) {
+            $project->user_id = Auth::user()->id;
+            $project->save();
+        }
+
+        $user->delete();
+
+        return Redirect::to('admin/users');
+    }
+
+    public function makeActive($userId)
+    {
+        $user = User::where('id', $userId)->firstOrFail();
+        $user->isActive = !$user->isActive;
+        $user->save();
+
+        return Redirect::to('admin/users');
+    }
+
+    public function makeAdmin($userId)
+    {
+        $user = User::where('id', $userId)->firstOrFail();
+        $user->isAdmin = !$user->isAdmin;
+        $user->save();
+
+        return Redirect::to('admin/users');
+    }
+
+    public function resetPassword($userId)
+    {
+        $user = User::where('id', $userId)->firstOrFail();
+        $this->postForgotPassword($user);
+        
+        return Redirect::to('admin/users');
     }
 
 }

@@ -7,7 +7,7 @@ return [
      *
      * @var string
      */
-    "version"    => "0.2.1",
+    "version"    => "0.2.2",
 
     /**
      * Enable account activation code generation.

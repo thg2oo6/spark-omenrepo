@@ -9,4 +9,7 @@
         <a href="<?= URL::to('/account'); ?>" class="omen-sidelink">my account</a>
         <a href="<?= URL::to('/logout'); ?>" class="omen-sidelink">logout</a>
     </li>
+    <?php if (Auth::user()->isAdmin): ?>
+        <li><a href="<?= URL::to('/admin/dashboard'); ?>" class="omen-sidelink">admin panel</a></li>
+    <?php endif; ?>
 </ul>

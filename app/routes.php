@@ -61,6 +61,24 @@ Route::get('account', 'UserController@getAccount')->before('auth');
 Route::post('account', 'UserController@postAccount')->before('auth');
 Route::get('account/delete_token/{token}', 'UserController@deleteToken')->before('auth');
 
+Route::group(['prefix' => 'admin', 'before' => 'auth.admin'], function () {
+    Route::get('', function () {
+        return Redirect::to('admin/dashboard');
+    });
+
+    Route::get('dashboard', "Admin\\MainController@getDashboard");
+    Route::get('projects', "Admin\\MainController@getProjects");
+    Route::get('keywords', "Admin\\MainController@getKeywords");
+    Route::get('users', "Admin\\MainController@getUsers");
+
+    Route::get('users/{id}/delete', "UserController@deleteUser");
+    Route::get('users/{id}/makeAdmin', "UserController@makeAdmin");
+    Route::get('users/{id}/makeActive', "UserController@makeActive");
+    Route::get('users/{id}/reset', "UserController@resetPassword");
+
+    Route::get('projects/{id}/delete', "UnpublishController@deleteProject");
+});
+
 /**
  * Omen API routes.
  */

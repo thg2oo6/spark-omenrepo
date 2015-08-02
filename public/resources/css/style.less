@@ -96,7 +96,7 @@ a, .btn-link {
         }
 
         .omen-logo {
-            .imageNoTextLH(default, 168px, 75px, '../images/omen.logo.png');
+            .imageNoTextLH(pointer, 168px, 75px, '../images/omen.logo.png');
         }
 
         .omen-userProfile {
@@ -146,6 +146,22 @@ a, .btn-link {
             font-style: italic;
             font-weight: 300;
         }
+    }
+
+    .omen-adminpanel {
+        a {
+            color: @white;
+        }
+
+        li a:hover {
+            color: @darkGray;
+        }
+
+        li.active a {
+            background: @white;
+            color: @highlight;
+        }
+
     }
 }
 
@@ -390,5 +406,28 @@ a, .btn-link {
                 }
             }
         }
+    }
+}
+
+.omen-adminContent {
+    h1 {
+        text-align: center;
+        font-weight: 300;
+        padding-bottom: 10px;
+    }
+}
+
+.omen-dashboardPackage {
+
+    .omen-tablePackage {
+        width: 50%;
+    }
+    .omen-tableVersion {
+        width: 15%;
+        text-align: center;
+    }
+    .omen-tableUser {
+        width: 35%;
+        text-align: center;
     }
 }
