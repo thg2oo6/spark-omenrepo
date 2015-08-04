@@ -236,7 +236,7 @@ class PublishController extends \BaseController
     private function extractVersion($version)
     {
         preg_match("/^(<|>|<=|>=)?([0-9]+).((\\*|[0-9]+)(\.([0-9]+|\\*))?)$/", $version, $ver);
-        $isValid = function ($e) {
+        $isValid = function (&$e) {
             if (!isset($e)) return false;
             if (empty($e)) return false;
 
