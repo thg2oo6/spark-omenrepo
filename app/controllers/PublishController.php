@@ -50,6 +50,8 @@ class PublishController extends \BaseController
             if (isset($file->dependencies))
                 $this->checkDependencies($version, $file->dependencies);
 
+            $this->extraInformation($project, $file);
+
             $project->save();
             DB::commit();
 
@@ -97,14 +99,7 @@ class PublishController extends \BaseController
         $project->user_id = Auth::user()->id;
         $project->name = $projectFile->name;
 
-        if (isset($projectFile->description))
-            $project->description = $projectFile->description;
-
-        if (isset($projectFile->homepage))
-            $project->homepage = $projectFile->homepage;
-
-        if (isset($projectFile->license))
-            $project->license = $projectFile->license;
+        $this->extraInformation($project, $projectFile);
 
         $project->save();
 
@@ -269,6 +264,22 @@ class PublishController extends \BaseController
             $versLine["like"] = true;
 
         return $versLine;
+    }
+
+    private function extraInformation($project, $projectFile)
+    {
+        $project->description = null;
+        $project->homepage = null;
+        $project->license = null;
+
+        if (isset($projectFile->description))
+            $project->description = $projectFile->description;
+
+        if (isset($projectFile->homepage))
+            $project->homepage = $projectFile->homepage;
+
+        if (isset($projectFile->license))
+            $project->license = $projectFile->license;
     }
 
 } 
